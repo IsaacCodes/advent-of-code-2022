@@ -25,5 +25,5 @@ pub fn v1() {
         }
     }
 
-    println!("{highest}")
+    println!("{highest}");
 }

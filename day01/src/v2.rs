@@ -31,5 +31,5 @@ pub fn v2() {
     }
 
     //Sum 3 items on min heap
-    println!("{}", min_heap.iter().map(|&Reverse(val)| val).sum::<i32>())
+    println!("{}", min_heap.iter().map(|&Reverse(val)| val).sum::<i32>());
 }
