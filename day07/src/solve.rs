@@ -32,10 +32,10 @@ pub fn solve(mode: u8) {
                 let child = cur_path
                 .last().unwrap()
                 .borrow()
+                .as_folder().unwrap()
                 .get_child(dir).unwrap();
                 
                 cur_path.push(child);
-
             }
         }
 
@@ -49,7 +49,7 @@ pub fn solve(mode: u8) {
             let (dir_or_size, name) = line.split_once(" ").unwrap();
             let parent = cur_path.last().unwrap().clone();
 
-            parent.borrow_mut().add_child(
+            parent.borrow_mut().as_folder_mut().unwrap().add_child(
                 //Folder case
                 if dir_or_size == "dir" {
                     FolderEntry::new(name).into()
@@ -62,10 +62,11 @@ pub fn solve(mode: u8) {
         }
     }
 
-    //Get root back + set size
-    let mut root = cur_path[0].borrow_mut();
+    //Get root back as FolderEntry
+    let mut root_entry = cur_path[0].borrow_mut();
+    let root = root_entry.as_folder_mut().unwrap();
+    //Set size
     root.size();
-
     //Second pass for files the fulfill qualifications
     let res = 
         if mode == 1 {
@@ -82,6 +83,5 @@ pub fn solve(mode: u8) {
         };
 
     println!("{res}");
+    
 }
-
-//TODO: use mode for solve, refactor to make cleaner overall
